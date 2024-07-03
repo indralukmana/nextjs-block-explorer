@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "~/lib/utils";
+import { ThemeProvider } from "~/components/theme-selector/theme-provider";
+import { ThemeToggle } from "~/components/theme-selector/theme-toggle";
+import { Separator } from "~/components/ui/separator";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -23,7 +26,19 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="w-full flex justify-between items-center p-4">
+            <h1>Next.js Ethereum Block Explorer</h1>
+            <ThemeToggle />
+          </div>
+          <Separator />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
