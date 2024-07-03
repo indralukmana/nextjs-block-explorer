@@ -3,9 +3,9 @@ import "server-only";
 import { Alchemy, AlchemySettings, Network } from "alchemy-sdk";
 import { headers } from "next/headers";
 
-const baseUrl = `${headers().get("x-forwarded-proto")}://${headers().get(
-  "host"
-)}`;
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : `http://localhost:3000`;
 
 const alchemySettings = {
   apiKey: process.env.ALCHEMY_API_KEY,
