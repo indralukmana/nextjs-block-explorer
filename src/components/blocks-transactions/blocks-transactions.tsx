@@ -20,7 +20,11 @@ export function BlocksTransactions({ blocks }: BlocksTransactionsProps) {
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <BlockList blocks={blocks} setBlockIndex={setBlockIndex} />
+      <BlockList
+        blocks={blocks}
+        blockIndex={blockIndex}
+        setBlockIndex={setBlockIndex}
+      />
       <TransactionList transactions={transactions} blockNumber={blockNumber} />
     </div>
   );

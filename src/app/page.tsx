@@ -26,13 +26,14 @@ export default async function Home() {
           blockNumber: transaction.blockNumber,
           from: transaction.from,
           to: transaction.to,
-          value: transaction.value,
         };
       }
     );
 
     return {
       number: latestBlock.number,
+      hash: latestBlock.hash,
+      timestamp: latestBlock.timestamp,
       transactions,
     };
   });
