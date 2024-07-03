@@ -1,3 +1,5 @@
+import "server-only";
+
 import { Alchemy, AlchemySettings, Network } from "alchemy-sdk";
 import { headers } from "next/headers";
 

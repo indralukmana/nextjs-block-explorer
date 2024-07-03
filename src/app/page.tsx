@@ -1,3 +1,8 @@
+"use server";
+
+import { BlocksTransactions } from "~/components/blocks-transactions/blocks-transactions";
+import { BlockTransactionProvider } from "~/components/contexts/block-transaction-context";
+import { BlockItem, TransactionItem } from "~/components/types/block";
 import { alchemy } from "~/lib/alchemy";
 
 export default async function Home() {
@@ -13,32 +18,30 @@ export default async function Home() {
     )
   );
 
-  const shownBlock = latest10Blocks[0].number;
+  const blocks = latest10Blocks.map((latestBlock) => {
+    const transactions = latestBlock.transactions.map<TransactionItem>(
+      (transaction) => {
+        return {
+          hash: transaction.hash,
+          blockNumber: transaction.blockNumber,
+          from: transaction.from,
+          to: transaction.to,
+          value: transaction.value,
+        };
+      }
+    );
 
-  const shownTransactions = latest10Blocks[0].transactions;
+    return {
+      number: latestBlock.number,
+      transactions,
+    };
+  });
 
   return (
     <main className="min-h-screen grid grid-rows-2 gap-4 p-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div className="border-2 border-slate-600 rounded-lg p-4">
-          <h2>Latest 10 Blocks</h2>
-          {latest10Blocks.map((block) => {
-            return <div key={block.number}>Block {block.number}</div>;
-          })}
-        </div>
-        <div className="border-2 border-slate-600 rounded-lg p-4">
-          <h2>Latest 10 transactions of block {shownBlock}</h2>
-          {shownTransactions.map((transaction, index) => {
-            if (index < 10) {
-              return (
-                <div key={transaction.hash}>
-                  {transaction.hash.slice(0, 5)}...{transaction.hash.slice(-5)}
-                </div>
-              );
-            }
-          })}
-        </div>
-      </div>
+      <BlockTransactionProvider>
+        <BlocksTransactions blocks={blocks} />
+      </BlockTransactionProvider>
     </main>
   );
 }
