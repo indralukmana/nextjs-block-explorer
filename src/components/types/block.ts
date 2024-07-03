@@ -7,5 +7,5 @@ export type BlockItem = {
 
 export type TransactionItem = Pick<
   TransactionResponse,
-  "blockNumber" | "from" | "to" | "value"
+  "blockNumber" | "from" | "to" | "value" | "hash"
 >;
